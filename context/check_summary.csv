@@ -1,0 +1,8 @@
+metric,value
+row_count,84
+column_count,15
+missing_required_columns,0
+duplicate_key_rows,0
+columns_with_na,3
+rows_with_zero_or_missing_throughput,23
+rows_with_negative_values,0
