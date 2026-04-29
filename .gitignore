@@ -1,0 +1,12 @@
+.DS_Store
+**/.DS_Store
+.Rhistory
+**/.Rhistory
+.RData
+**/.RData
+Rplots.pdf
+*.Rproj.user
+
+# local export bundles
+context.zip
+context 2.zip
