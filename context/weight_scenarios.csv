@@ -1,0 +1,73 @@
+scenario,index_type,component,weight,rank,source_note
+custom,buffer,buffer_space_pct,0.45,1,Custom rule from app_formula_design.md
+custom,buffer,buffer_net_pct,0.35,2,Custom rule from app_formula_design.md
+custom,buffer,buffer_export_pct,0.2,3,Custom rule from app_formula_design.md
+custom_nearby_a,buffer,buffer_space_pct,0.5,1,Sensitivity test around custom weights
+custom_nearby_a,buffer,buffer_net_pct,0.3,2,Sensitivity test around custom weights
+custom_nearby_a,buffer,buffer_export_pct,0.2,3,Sensitivity test around custom weights
+custom_nearby_b,buffer,buffer_space_pct,0.4,1,Sensitivity test around custom weights
+custom_nearby_b,buffer,buffer_net_pct,0.4,2,Sensitivity test around custom weights
+custom_nearby_b,buffer,buffer_export_pct,0.2,3,Sensitivity test around custom weights
+custom_nearby_c,buffer,buffer_space_pct,0.45,1,Sensitivity test around custom weights
+custom_nearby_c,buffer,buffer_net_pct,0.4,2,Sensitivity test around custom weights
+custom_nearby_c,buffer,buffer_export_pct,0.15,3,Sensitivity test around custom weights
+custom_nearby_d,buffer,buffer_space_pct,0.5,1,Sensitivity test around custom weights
+custom_nearby_d,buffer,buffer_net_pct,0.35,2,Sensitivity test around custom weights
+custom_nearby_d,buffer,buffer_export_pct,0.15,3,Sensitivity test around custom weights
+custom_nearby_e,buffer,buffer_space_pct,0.4,1,Sensitivity test around custom weights
+custom_nearby_e,buffer,buffer_net_pct,0.35,2,Sensitivity test around custom weights
+custom_nearby_e,buffer,buffer_export_pct,0.25,3,Sensitivity test around custom weights
+roc,buffer,buffer_space_pct,0.611,1,ROC baseline from 權重資料.md
+roc,buffer,buffer_net_pct,0.278,2,ROC baseline from 權重資料.md
+roc,buffer,buffer_export_pct,0.111,3,ROC baseline from 權重資料.md
+custom,pressure,pressure_net_pct,0.4,1,Custom rule from app_formula_design.md
+custom,pressure,pressure_flow_pct,0.35,2,Custom rule from app_formula_design.md
+custom,pressure,pressure_roll_pct,0.25,3,Custom rule from app_formula_design.md
+custom_nearby_a,pressure,pressure_net_pct,0.45,1,Sensitivity test around custom weights
+custom_nearby_a,pressure,pressure_flow_pct,0.3,2,Sensitivity test around custom weights
+custom_nearby_a,pressure,pressure_roll_pct,0.25,3,Sensitivity test around custom weights
+custom_nearby_b,pressure,pressure_net_pct,0.35,1,Sensitivity test around custom weights
+custom_nearby_b,pressure,pressure_flow_pct,0.4,2,Sensitivity test around custom weights
+custom_nearby_b,pressure,pressure_roll_pct,0.25,3,Sensitivity test around custom weights
+custom_nearby_c,pressure,pressure_net_pct,0.45,1,Sensitivity test around custom weights
+custom_nearby_c,pressure,pressure_flow_pct,0.35,2,Sensitivity test around custom weights
+custom_nearby_c,pressure,pressure_roll_pct,0.2,3,Sensitivity test around custom weights
+custom_nearby_d,pressure,pressure_net_pct,0.4,1,Sensitivity test around custom weights
+custom_nearby_d,pressure,pressure_flow_pct,0.4,2,Sensitivity test around custom weights
+custom_nearby_d,pressure,pressure_roll_pct,0.2,3,Sensitivity test around custom weights
+custom_nearby_e,pressure,pressure_net_pct,0.4,1,Sensitivity test around custom weights
+custom_nearby_e,pressure,pressure_flow_pct,0.3,2,Sensitivity test around custom weights
+custom_nearby_e,pressure,pressure_roll_pct,0.3,3,Sensitivity test around custom weights
+roc,pressure,pressure_net_pct,0.611,1,ROC baseline: prioritize actual accumulation first
+roc,pressure,pressure_flow_pct,0.278,2,ROC baseline: current inflow share second
+roc,pressure,pressure_roll_pct,0.111,3,ROC baseline: recent trend third
+roc_bridge_1,pressure,pressure_net_pct,0.625,1,"ROC bridge 1: between prev_best and up_3; net 0.625, flow 0.218, roll 0.157"
+roc_bridge_1,pressure,pressure_flow_pct,0.218,2,"ROC bridge 1: between prev_best and up_3; net 0.625, flow 0.218, roll 0.157"
+roc_bridge_1,pressure,pressure_roll_pct,0.157,3,"ROC bridge 1: between prev_best and up_3; net 0.625, flow 0.218, roll 0.157"
+roc_bridge_2,pressure,pressure_net_pct,0.65,1,"ROC bridge 2: between prev_best and up_3; net 0.650, flow 0.215, roll 0.135"
+roc_bridge_2,pressure,pressure_flow_pct,0.215,2,"ROC bridge 2: between prev_best and up_3; net 0.650, flow 0.215, roll 0.135"
+roc_bridge_2,pressure,pressure_roll_pct,0.135,3,"ROC bridge 2: between prev_best and up_3; net 0.650, flow 0.215, roll 0.135"
+roc_bridge_3,pressure,pressure_net_pct,0.675,1,"ROC bridge 3: between prev_best and up_3; net 0.675, flow 0.213, roll 0.112"
+roc_bridge_3,pressure,pressure_flow_pct,0.213,2,"ROC bridge 3: between prev_best and up_3; net 0.675, flow 0.213, roll 0.112"
+roc_bridge_3,pressure,pressure_roll_pct,0.112,3,"ROC bridge 3: between prev_best and up_3; net 0.675, flow 0.213, roll 0.112"
+roc_down_1,pressure,pressure_net_pct,0.58,1,"ROC down 1: net 0.611 -> 0.580, flow 0.278 -> 0.270, roll 0.111 -> 0.150"
+roc_down_1,pressure,pressure_flow_pct,0.27,2,"ROC down 1: net 0.611 -> 0.580, flow 0.278 -> 0.270, roll 0.111 -> 0.150"
+roc_down_1,pressure,pressure_roll_pct,0.15,3,"ROC down 1: net 0.611 -> 0.580, flow 0.278 -> 0.270, roll 0.111 -> 0.150"
+roc_down_2,pressure,pressure_net_pct,0.56,1,"ROC down 2: net 0.611 -> 0.560, flow 0.278 -> 0.280, roll 0.111 -> 0.160"
+roc_down_2,pressure,pressure_flow_pct,0.28,2,"ROC down 2: net 0.611 -> 0.560, flow 0.278 -> 0.280, roll 0.111 -> 0.160"
+roc_down_2,pressure,pressure_roll_pct,0.16,3,"ROC down 2: net 0.611 -> 0.560, flow 0.278 -> 0.280, roll 0.111 -> 0.160"
+roc_down_3,pressure,pressure_net_pct,0.54,1,"ROC down 3: net 0.611 -> 0.540, flow 0.278 -> 0.290, roll 0.111 -> 0.170"
+roc_down_3,pressure,pressure_flow_pct,0.29,2,"ROC down 3: net 0.611 -> 0.540, flow 0.278 -> 0.290, roll 0.111 -> 0.170"
+roc_down_3,pressure,pressure_roll_pct,0.17,3,"ROC down 3: net 0.611 -> 0.540, flow 0.278 -> 0.290, roll 0.111 -> 0.170"
+roc_prev_best,pressure,pressure_net_pct,0.6,1,"Previous best ROC nearby candidate: net 0.600, flow 0.220, roll 0.180"
+roc_prev_best,pressure,pressure_flow_pct,0.22,2,"Previous best ROC nearby candidate: net 0.600, flow 0.220, roll 0.180"
+roc_prev_best,pressure,pressure_roll_pct,0.18,3,"Previous best ROC nearby candidate: net 0.600, flow 0.220, roll 0.180"
+roc_up_1,pressure,pressure_net_pct,0.64,1,"ROC up 1: net 0.611 -> 0.640, flow 0.278 -> 0.250, roll 0.111 -> 0.110"
+roc_up_1,pressure,pressure_flow_pct,0.25,2,"ROC up 1: net 0.611 -> 0.640, flow 0.278 -> 0.250, roll 0.111 -> 0.110"
+roc_up_1,pressure,pressure_roll_pct,0.11,3,"ROC up 1: net 0.611 -> 0.640, flow 0.278 -> 0.250, roll 0.111 -> 0.110"
+roc_up_2,pressure,pressure_net_pct,0.67,1,"ROC up 2: net 0.611 -> 0.670, flow 0.278 -> 0.230, roll 0.111 -> 0.100"
+roc_up_2,pressure,pressure_flow_pct,0.23,2,"ROC up 2: net 0.611 -> 0.670, flow 0.278 -> 0.230, roll 0.111 -> 0.100"
+roc_up_2,pressure,pressure_roll_pct,0.1,3,"ROC up 2: net 0.611 -> 0.670, flow 0.278 -> 0.230, roll 0.111 -> 0.100"
+roc_up_3,pressure,pressure_net_pct,0.7,1,"ROC up 3: net 0.611 -> 0.700, flow 0.278 -> 0.210, roll 0.111 -> 0.090"
+roc_up_3,pressure,pressure_flow_pct,0.21,2,"ROC up 3: net 0.611 -> 0.700, flow 0.278 -> 0.210, roll 0.111 -> 0.090"
+roc_up_3,pressure,pressure_roll_pct,0.09,3,"ROC up 3: net 0.611 -> 0.700, flow 0.278 -> 0.210, roll 0.111 -> 0.090"
