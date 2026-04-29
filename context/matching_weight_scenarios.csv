@@ -1,0 +1,37 @@
+scenario,family,phase,component,weight,rank,source_note
+custom_nearby_a,custom,nearby,source_pressure_pct,0.5,1,Nearby custom: more source urgency
+custom_nearby_a,custom,nearby,target_buffer_pct,0.3,2,Nearby custom: more source urgency
+custom_nearby_a,custom,nearby,distance_pct,0.2,3,Nearby custom: more source urgency
+custom_nearby_b,custom,nearby,source_pressure_pct,0.4,1,Nearby custom: more target buffer
+custom_nearby_b,custom,nearby,target_buffer_pct,0.4,2,Nearby custom: more target buffer
+custom_nearby_b,custom,nearby,distance_pct,0.2,3,Nearby custom: more target buffer
+custom_nearby_c,custom,nearby,source_pressure_pct,0.45,1,Nearby custom: shift distance to target buffer
+custom_nearby_c,custom,nearby,target_buffer_pct,0.4,2,Nearby custom: shift distance to target buffer
+custom_nearby_c,custom,nearby,distance_pct,0.15,3,Nearby custom: shift distance to target buffer
+custom_nearby_d,custom,nearby,source_pressure_pct,0.45,1,"Nearby custom: more distance, less target"
+custom_nearby_d,custom,nearby,target_buffer_pct,0.3,2,"Nearby custom: more distance, less target"
+custom_nearby_d,custom,nearby,distance_pct,0.25,3,"Nearby custom: more distance, less target"
+custom_nearby_e,custom,nearby,source_pressure_pct,0.5,1,Nearby custom: more source and distance
+custom_nearby_e,custom,nearby,target_buffer_pct,0.25,2,Nearby custom: more source and distance
+custom_nearby_e,custom,nearby,distance_pct,0.25,3,Nearby custom: more source and distance
+custom,custom,parent,source_pressure_pct,0.45,1,Custom default from app_formula_design.md
+custom,custom,parent,target_buffer_pct,0.35,2,Custom default from app_formula_design.md
+custom,custom,parent,distance_pct,0.2,3,Custom default from app_formula_design.md
+roc_nearby_a,roc,nearby,source_pressure_pct,0.58,1,"Nearby ROC: slightly less source, more target"
+roc_nearby_a,roc,nearby,target_buffer_pct,0.3,2,"Nearby ROC: slightly less source, more target"
+roc_nearby_a,roc,nearby,distance_pct,0.12,3,"Nearby ROC: slightly less source, more target"
+roc_nearby_b,roc,nearby,source_pressure_pct,0.55,1,"Nearby ROC: less source, more distance"
+roc_nearby_b,roc,nearby,target_buffer_pct,0.3,2,"Nearby ROC: less source, more distance"
+roc_nearby_b,roc,nearby,distance_pct,0.15,3,"Nearby ROC: less source, more distance"
+roc_nearby_c,roc,nearby,source_pressure_pct,0.64,1,"Nearby ROC: more source, less target"
+roc_nearby_c,roc,nearby,target_buffer_pct,0.25,2,"Nearby ROC: more source, less target"
+roc_nearby_c,roc,nearby,distance_pct,0.11,3,"Nearby ROC: more source, less target"
+roc_nearby_d,roc,nearby,source_pressure_pct,0.61,1,"Nearby ROC: keep source, increase distance"
+roc_nearby_d,roc,nearby,target_buffer_pct,0.24,2,"Nearby ROC: keep source, increase distance"
+roc_nearby_d,roc,nearby,distance_pct,0.15,3,"Nearby ROC: keep source, increase distance"
+roc_nearby_e,roc,nearby,source_pressure_pct,0.58,1,"Nearby ROC: reduce source, raise distance and target balance"
+roc_nearby_e,roc,nearby,target_buffer_pct,0.25,2,"Nearby ROC: reduce source, raise distance and target balance"
+roc_nearby_e,roc,nearby,distance_pct,0.17,3,"Nearby ROC: reduce source, raise distance and target balance"
+roc,roc,parent,source_pressure_pct,0.611,1,ROC baseline: source urgency first
+roc,roc,parent,target_buffer_pct,0.278,2,ROC baseline: target buffer second
+roc,roc,parent,distance_pct,0.111,3,ROC baseline: distance friction third

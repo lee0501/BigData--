@@ -1,0 +1,18 @@
+.DS_Store
+**/.DS_Store
+.Rhistory
+**/.Rhistory
+.RData
+**/.RData
+Rplots.pdf
+*.Rproj.user
+
+# local export bundles
+context.zip
+context 2.zip
+
+# local-only docs and legacy dashboard variants
+paper_doc/
+iMarine_dashboard_stable_local.R
+iMarine_dashboard_local_fixed_v3.R
+iMarine_dashboard_fixed_R3_compatible.R
