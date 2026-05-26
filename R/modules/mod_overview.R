@@ -42,6 +42,22 @@ overview_page_ui <- function() {
       )
     ),
     div(
+      class = "card home-block",
+      div(
+        class = "c-inner",
+        div(
+          class = "c-head",
+          span(class = "c-title", "次月風險排序"),
+          span(class = "c-chip", "簡單預警")
+        ),
+        div(
+          class = "mode-note",
+          HTML("依 <strong>pressure_index_streak_boost</strong>（當月壓力指數 + 連續淨流入月數加權）排序，推測下月高壓港優先對象。非 Prophet 模型；正式口徑 9 個月回測，top1 命中率 88.9%。若需季節性背景驗證，請前往「官方統計基準」頁。")
+        ),
+        uiOutput("overview_next_month_watchlist")
+      )
+    ),
+    div(
       class = "ds-section",
       div(
         class = "dt-card",

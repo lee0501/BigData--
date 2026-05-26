@@ -165,3 +165,27 @@ distance_detail <- if (file.exists(distance_detail_path)) {
     distance_class = numeric()
   )
 }
+
+next_month_watchlist <- {
+  p <- file.path(context_dir, "forecast_high_pressure_latest_watchlist.csv")
+  if (file.exists(p)) {
+    read_csv(p, show_col_types = FALSE) %>%
+      mutate(port = normalize_port(port)) %>%
+      arrange(selected_rank)
+  } else {
+    tibble()
+  }
+}
+
+next_month_backtest_top1 <- {
+  p <- file.path(context_dir, "forecast_high_pressure_backtest_summary.csv")
+  if (file.exists(p)) {
+    read_csv(p, show_col_types = FALSE) %>%
+      filter(window == "official", model == "pressure_index_streak_boost") %>%
+      slice(1)
+  } else {
+    tibble()
+  }
+}
+
+next_month_available <- nrow(next_month_watchlist) > 0

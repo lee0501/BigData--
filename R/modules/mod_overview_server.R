@@ -264,5 +264,56 @@ register_overview_outputs <- function(server_env) {
           )
         )
       })
+      output$overview_next_month_watchlist <- renderUI({
+        if (!next_month_available) {
+          return(div(
+            class = "mode-note",
+            "尚未產生次月風險排序資料，請執行 context/backtest_forecast_high_pressure.R。"
+          ))
+        }
+
+        rows <- next_month_watchlist
+        target_ym <- rows$target_ym[[1]]
+        origin_ym  <- rows$origin_ym[[1]]
+
+        priority_class <- function(p) {
+          switch(p, "高預警" = "danger", "觀察" = "highlight", "")
+        }
+
+        tagList(
+          div(
+            class = "mode-note subtle",
+            paste0("來源月：", fmt_ym(origin_ym), "　→　預測目標月：", fmt_ym(target_ym))
+          ),
+          div(
+            class = "dt-table-wrap has-scroll",
+            tags$table(
+              class = "dt-table",
+              tags$thead(tags$tr(
+                tags$th("排序"),
+                tags$th("港口"),
+                tags$th("風險等級"),
+                tags$th("預警分數"),
+                tags$th("連續淨流入月數"),
+                tags$th("空櫃淨流量")
+              )),
+              tags$tbody(
+                tagList(lapply(seq_len(nrow(rows)), function(i) {
+                  row <- rows[i, ]
+                  tags$tr(
+                    tags$td(class = "dt-row-num", row$selected_rank),
+                    tags$td(display_port(row$port)),
+                    tags$td(class = priority_class(row$forecast_priority), row$forecast_priority),
+                    tags$td(class = "dt-mono", fmt_idx(row$selected_score, 3)),
+                    tags$td(row$positive_net_streak),
+                    tags$td(fmt_num(row$empty_net, 0))
+                  )
+                }))
+              )
+            )
+          )
+        )
+      })
+
   }, envir = server_env)
 }
