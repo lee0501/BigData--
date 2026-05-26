@@ -16,3 +16,6 @@ paper_doc/
 iMarine_dashboard_stable_local.R
 iMarine_dashboard_local_fixed_v3.R
 iMarine_dashboard_fixed_R3_compatible.R
+
+# developer journal — not for public repo
+context/develop\ log.md

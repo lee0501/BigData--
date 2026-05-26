@@ -270,10 +270,10 @@ move_amount = move_share * max(source_empty_net, 0)
 
 1. [`README.md`](README.md)：先建立整體專案故事與價值主張。
 2. [`context/bigdata.md`](context/bigdata.md)：看研究背景、核心問題、資料來源與研究架構。
-3. [`context/app_formula_design.md`](context/app_formula_design.md)：看指標、狀態分類、媒合與模擬公式。
-4. [`context/file_guide.md`](context/file_guide.md)：看所有 `R` 腳本、`csv` 產物、彼此依賴關係與執行順序。
-5. [`context/weight_backtest_plan.md`](context/weight_backtest_plan.md)：看權重回測方法、目前結果與限制。
-6. [`context/app_formula_design.md`](context/app_formula_design.md) 附錄 A：看權重設計的理論依據（ROC 法、交通部佐證、自治權重）。
+3. [`context/app_formula_design.md`](context/app_formula_design.md)：看指標、狀態分類、媒合與模擬公式，以及附錄 A 的權重設計依據（ROC 法、交通部佐證、自治權重）。
+4. [`context/weight_backtest_plan.md`](context/weight_backtest_plan.md)：看三層權重的回測設計原則、採用結果與限制。
+5. [`context/file_guide.md`](context/file_guide.md)：看所有 `R` 腳本、`csv` 產物、彼此依賴關係與執行順序。
+6. [`context/dashboard_guide.md`](context/dashboard_guide.md)：看 dashboard 各頁面設計規範、名詞定義與資料來源分工。
 
 ## 執行與輸出主線
 
