@@ -7,7 +7,7 @@
 
 ## 一、設計原則
 
-依照 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md) 的研究訴求，公式設計需符合以下原則：
+依照 [bigdata.md](bigdata.md) 的研究訴求，公式設計需符合以下原則：
 
 1. 採 **push-based** 邏輯  
    先找出「需釋放空櫃」的港口，再找「可承接」港口。
@@ -32,7 +32,7 @@
 
 ### 2.1 可直接由公開資料取得的欄位
 
-下列欄位可直接來自 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md) 規劃的資料集：
+下列欄位可直接來自 [bigdata.md](bigdata.md) 規劃的資料集：
 
 | 欄位 | 說明 | 來源 |
 |---|---|---|
@@ -102,7 +102,7 @@ roll3_empty_net = mean(empty_net_t, empty_net_t-1, empty_net_t-2)
 
 ### 對應 markdown 訴求
 
-這一層直接對應 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L245) 的空櫃流動構面，以及 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L370) 要求的淨流量與累積趨勢分析。
+這一層直接對應 [bigdata.md](bigdata.md#L245) 的空櫃流動構面，以及 [bigdata.md](bigdata.md#L370) 要求的淨流量與累積趨勢分析。
 
 ---
 
@@ -133,13 +133,13 @@ pressure_roll_raw = pmax(roll3_empty_net, 0) / throughput
 
 ### `baseline`、`custom` 與目前擬採值
 
-[權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:12) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:18) 已將權重來源分為三類：
+附錄 A 已將權重來源分為三類：
 
 - 交通部資料：作為研究與營運背景依據
 - `ROC`：作為只知道重要性排序時的理論基準情境
 - `custom`：作為研究導向的自訂情境
 
-其中 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:59) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:76) 也明確說明：
+其中附錄 A 也明確說明：
 
 - `baseline` 應理解為方法論上的比較基準，而非直接定案值
 - `custom` 應理解為研究敘事下的初始預設值，最終仍需由 `T+1` 回測決定
@@ -148,7 +148,7 @@ pressure_roll_raw = pmax(roll3_empty_net, 0) / throughput
 
 1. `baseline (ROC)`  
    若僅知道 `pressure_net > pressure_flow > pressure_roll` 的重要性排序，則可採三構面 ROC 權重 `0.611 / 0.278 / 0.111`。  
-   其情境定義與實作可見 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:15) 到 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:18)、[build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:49) 到 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:51)。
+   其情境定義與實作可見 [build_weight_scenarios.R](build_weight_scenarios.R:15) 到 [build_weight_scenarios.R](build_weight_scenarios.R:18)、[build_weight_scenarios.R](build_weight_scenarios.R:49) 到 [build_weight_scenarios.R](build_weight_scenarios.R:51)。
 
    ```text
    pressure_index_roc =
@@ -159,7 +159,7 @@ pressure_roll_raw = pmax(roll3_empty_net, 0) / throughput
 
 2. `custom (研究初始預設值)`  
    依研究敘事，初始假設版將 `pressure_net_raw` 設為核心構面，並保留 `pressure_flow_raw` 與 `pressure_roll_raw` 的輔助角色。  
-   其預設值可見 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:82) 到 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:84)，研究定位說明則見 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:65) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:76)。
+   其預設值可見 [build_weight_scenarios.R](build_weight_scenarios.R:82) 到 [build_weight_scenarios.R](build_weight_scenarios.R:84)，研究定位說明見附錄 A。
 
    ```text
    pressure_index_custom =
@@ -169,7 +169,7 @@ pressure_roll_raw = pmax(roll3_empty_net, 0) / throughput
    ```
 
 3. `目前擬採正式值`  
-   目前 `Pressure-only` 回測結果中，`roc_prev_best` 排名第 1，見 [pressure_backtest_summary.csv](/Users/lee/Documents/BigData/context/pressure_backtest_summary.csv:2)；其鄰近 ROC 家族的比較邏輯與流程紀錄見 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:140) 到 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:205)。  
+   目前 `Pressure-only` 回測結果中，`roc_prev_best` 排名第 1，見 [pressure_backtest_summary.csv](context/pressure_backtest_summary.csv:2)；其鄰近 ROC 家族的比較邏輯與流程紀錄見 [weight_backtest_plan.md](weight_backtest_plan.md:140) 到 [weight_backtest_plan.md](weight_backtest_plan.md:205)。  
    因此若以目前研究主線的暫定正式版本來看，3.2 應採 `roc_prev_best`：
 
    ```text
@@ -195,7 +195,7 @@ pressure_roll_raw = pmax(roll3_empty_net, 0) / throughput
 
 ### 為什麼這樣設計
 
-- 保留 `throughput` 正規化概念，符合 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L176) 到 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L194)
+- 保留 `throughput` 正規化概念，符合 [bigdata.md](bigdata.md#L176) 到 [bigdata.md](bigdata.md#L194)
 - 不只看「進港量」，也看「是否真的累積」
 - 不只看單月，也看短期持續性
 
@@ -230,7 +230,7 @@ buffer_export_raw = export_pull
 
 1. `baseline (ROC)`  
    若僅知道 `buffer_space > buffer_net > buffer_export` 的重要性排序，則可採三構面 ROC 權重 `0.611 / 0.278 / 0.111`。  
-   其理論定位可參考 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:42) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:63)，情境實作則見 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:100) 到 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:102)。
+   其理論定位見附錄 A，情境實作則見 [build_weight_scenarios.R](build_weight_scenarios.R:100) 到 [build_weight_scenarios.R](build_weight_scenarios.R:102)。
 
    ```text
    buffer_index_roc =
@@ -241,7 +241,7 @@ buffer_export_raw = export_pull
 
 2. `custom (研究初始預設值)`  
    依研究敘事，初始假設版保留 `buffer_space_raw` 為主要構面，並讓 `buffer_net_raw` 與 `buffer_export_raw` 作為承接穩定性與出口吸納能力的輔助構面。  
-   其預設值可見 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:103) 到 [build_weight_scenarios.R](/Users/lee/Documents/BigData/context/build_weight_scenarios.R:105)，研究定位則可參考 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:65) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:76)。
+   其預設值可見 [build_weight_scenarios.R](build_weight_scenarios.R:103) 到 [build_weight_scenarios.R](build_weight_scenarios.R:105)，研究定位見附錄 A。
 
    ```text
    buffer_index_custom =
@@ -251,8 +251,8 @@ buffer_export_raw = export_pull
    ```
 
 3. `目前擬採正式值`  
-   為避免 `Pressure` 與 `Buffer` 同時變動而難以解讀，本研究先固定 `pressure = roc_prev_best`，再單獨比較 `buffer` 情境，這一輪小實驗流程與評估指標可見 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:207) 到 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:290)。  
-   目前 `custom_nearby_c` 排名第 1，見 [buffer_backtest_summary.csv](/Users/lee/Documents/BigData/context/buffer_backtest_summary.csv:2)；`custom_nearby_b` 為次佳，見 [buffer_backtest_summary.csv](/Users/lee/Documents/BigData/context/buffer_backtest_summary.csv:3)；`roc` 則在本輪比較中排名最後，見 [buffer_backtest_summary.csv](/Users/lee/Documents/BigData/context/buffer_backtest_summary.csv:8)。  
+   為避免 `Pressure` 與 `Buffer` 同時變動而難以解讀，本研究先固定 `pressure = roc_prev_best`，再單獨比較 `buffer` 情境，這一輪小實驗流程與評估指標可見 [weight_backtest_plan.md](weight_backtest_plan.md:207) 到 [weight_backtest_plan.md](weight_backtest_plan.md:290)。  
+   目前 `custom_nearby_c` 排名第 1，見 [buffer_backtest_summary.csv](context/buffer_backtest_summary.csv:2)；`custom_nearby_b` 為次佳，見 [buffer_backtest_summary.csv](context/buffer_backtest_summary.csv:3)；`roc` 則在本輪比較中排名最後，見 [buffer_backtest_summary.csv](context/buffer_backtest_summary.csv:8)。  
    因此若以目前 3.3 的暫定正式版本來看，應採 `custom_nearby_c`：
 
    ```text
@@ -280,7 +280,7 @@ buffer_export_raw = export_pull
 
 ## 3.4 Status 設計
 
-依 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L262) 到 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L276)，分類應採相對門檻，而非固定 TEU 或固定比例。
+依 [bigdata.md](bigdata.md#L262) 到 [bigdata.md](bigdata.md#L276)，分類應採相對門檻，而非固定 TEU 或固定比例。
 
 在港口壓力衡量上，理論上較理想的做法應是以實際吞吐量相對於設計容量或堆場容量作為基準；但目前公開資料缺乏一致且可追溯的 `capacity`、`yard_capacity` 或 `occupancy_ratio`，因此本研究無法直接建立傳統意義上的 utilization ratio。這一點的補充說明見研究備忘錄「3.4 | 0.5 _ 0.75 定義」第 7–18 行。
 
@@ -342,7 +342,7 @@ else
 
 ## 3.5 Matching Score 設計
 
-依 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L278) 到 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L293)，媒合排序至少要考慮：
+依 [bigdata.md](bigdata.md#L278) 到 [bigdata.md](bigdata.md#L293)，媒合排序至少要考慮：
 
 1. 釋放端壓力程度
 2. 承接端緩衝程度
@@ -360,7 +360,7 @@ source_port != target_port
 
 也就是說，只有「相對需要優先釋放」的港口，才會與「具相對承接能力且目前不高壓」的港口形成候選調度對。
 
-目前 3.5 的正式分析宇宙限定為 `基隆港、臺北港、臺中港、高雄港`。`安平港` 雖保留於原始資料層，但因 2025 年 12 個月的 `empty_in`、`empty_out`、`full_in`、`full_out` 與 `empty_net` 全為 `0`，可見 [analysis_table_2025.csv](/Users/lee/Documents/BigData/context/analysis_table_2025.csv:14) 到 [analysis_table_2025.csv](/Users/lee/Documents/BigData/context/analysis_table_2025.csv:25)，因此不納入 `status_final_2025.csv` 與 `matching_final_2025.csv` 的正式比較與媒合分析，以避免結構性全零港扭曲當月橫截面分位數門檻與配對排序。
+目前 3.5 的正式分析宇宙限定為 `基隆港、臺北港、臺中港、高雄港`。`安平港` 雖保留於原始資料層，但因 2025 年 12 個月的 `empty_in`、`empty_out`、`full_in`、`full_out` 與 `empty_net` 全為 `0`，可見 [analysis_table_2025.csv](context/analysis_table_2025.csv:14) 到 [analysis_table_2025.csv](context/analysis_table_2025.csv:25)，因此不納入 `status_final_2025.csv` 與 `matching_final_2025.csv` 的正式比較與媒合分析，以避免結構性全零港扭曲當月橫截面分位數門檻與配對排序。
 
 ### 距離矩陣與 `distance_class`
 
@@ -402,7 +402,7 @@ distance_class = 3 -> distance_factor = 0.70
 3.5 的權重設計同樣應區分 `baseline`、`custom` 與目前擬採值。
 
 1. `baseline (ROC)`  
-   若僅知道 `source_pressure > target_buffer > distance` 的重要性排序，則可採三構面 ROC 權重 `0.611 / 0.278 / 0.111`。其父方案比較結果可見 [matching_parent_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_parent_backtest_summary.csv:2) 到 [matching_parent_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_parent_backtest_summary.csv:3)。
+   若僅知道 `source_pressure > target_buffer > distance` 的重要性排序，則可採三構面 ROC 權重 `0.611 / 0.278 / 0.111`。其父方案比較結果可見 [matching_parent_backtest_summary.csv](context/matching_parent_backtest_summary.csv:2) 到 [matching_parent_backtest_summary.csv](context/matching_parent_backtest_summary.csv:3)。
 
    ```text
    matching_score_roc =
@@ -422,9 +422,9 @@ distance_class = 3 -> distance_factor = 0.70
    ```
 
 3. `目前擬採正式值`  
-   在固定 `pressure = roc_prev_best`、`buffer = custom_nearby_c` 的條件下，3.5 先比較 `roc` 與 `custom` 兩個父方案。結果顯示 `custom` 與 `roc` 在 top-1 target 安全率上相近，但 `custom` 較能把下期仍維持高壓力的來源港排到更前面，因此父方案比較由 `custom` 勝出，見 [matching_parent_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_parent_backtest_summary.csv:2) 到 [matching_parent_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_parent_backtest_summary.csv:3)。
+   在固定 `pressure = roc_prev_best`、`buffer = custom_nearby_c` 的條件下，3.5 先比較 `roc` 與 `custom` 兩個父方案。結果顯示 `custom` 與 `roc` 在 top-1 target 安全率上相近，但 `custom` 較能把下期仍維持高壓力的來源港排到更前面，因此父方案比較由 `custom` 勝出，見 [matching_parent_backtest_summary.csv](context/matching_parent_backtest_summary.csv:2) 到 [matching_parent_backtest_summary.csv](context/matching_parent_backtest_summary.csv:3)。
    
-   之後沿 `custom` 家族做鄰近小實驗，`custom_nearby_b = 0.40 / 0.40 / 0.20` 的 `pooled_outcome_corr` 略優於原始 `custom`，見 [matching_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_backtest_summary.csv:2) 到 [matching_backtest_summary.csv](/Users/lee/Documents/BigData/context/matching_backtest_summary.csv:4)。但 `custom_nearby_b` 與 `custom` 在 top-1 決策指標上目前幾乎一致，因此主文較保守的寫法仍應採 `custom` 作為 3.5 的正式版本，並將 `custom_nearby_b` 保留為敏感度分析下的暫定優先候選。
+   之後沿 `custom` 家族做鄰近小實驗，`custom_nearby_b = 0.40 / 0.40 / 0.20` 的 `pooled_outcome_corr` 略優於原始 `custom`，見 [matching_backtest_summary.csv](context/matching_backtest_summary.csv:2) 到 [matching_backtest_summary.csv](context/matching_backtest_summary.csv:4)。但 `custom_nearby_b` 與 `custom` 在 top-1 決策指標上目前幾乎一致，因此主文較保守的寫法仍應採 `custom` 作為 3.5 的正式版本，並將 `custom_nearby_b` 保留為敏感度分析下的暫定優先候選。
 
    ```text
    matching_score =
@@ -489,11 +489,11 @@ move_amount = move_share * max(source_empty_net, 0)
 
 1. **先獨立定案 `Pressure` 權重**  
    先只比較 `pressure_index` 的不同權重方案，並以相同的 expanding window 與 `T+1` 回測架構，檢查哪一組權重較能辨識下期仍持續累積的高壓力港。  
-   目前此步驟的結果可見 [pressure_backtest_summary.csv](/Users/lee/Documents/BigData/context/pressure_backtest_summary.csv:2) 到 [pressure_backtest_summary.csv](/Users/lee/Documents/BigData/context/pressure_backtest_summary.csv:12)，其中 `roc_prev_best` 排名第 1。
+   目前此步驟的結果可見 [pressure_backtest_summary.csv](context/pressure_backtest_summary.csv:2) 到 [pressure_backtest_summary.csv](context/pressure_backtest_summary.csv:12)，其中 `roc_prev_best` 排名第 1。
 
 2. **再固定 `Pressure`，單獨比較 `Buffer` 權重**  
    當 `pressure` 已有擬採方案後，將其固定，再只變動 `buffer_index` 的各組權重，檢查哪一組較能維持高緩衝港在下一期仍不易轉為高壓力狀態。  
-   目前此步驟的流程與結果可見 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:207) 到 [weight_backtest_plan.md](/Users/lee/Documents/BigData/context/weight_backtest_plan.md:290)、[buffer_backtest_summary.csv](/Users/lee/Documents/BigData/context/buffer_backtest_summary.csv:2) 到 [buffer_backtest_summary.csv](/Users/lee/Documents/BigData/context/buffer_backtest_summary.csv:8)，其中 `custom_nearby_c` 排名第 1。
+   目前此步驟的流程與結果可見 [weight_backtest_plan.md](weight_backtest_plan.md:207) 到 [weight_backtest_plan.md](weight_backtest_plan.md:290)、[buffer_backtest_summary.csv](context/buffer_backtest_summary.csv:2) 到 [buffer_backtest_summary.csv](context/buffer_backtest_summary.csv:8)，其中 `custom_nearby_c` 排名第 1。
 
 3. **最後才做 `Pressure + Buffer` 的整合檢查**  
    待 `pressure` 與 `buffer` 各自都有暫定主方案後，再進一步檢查兩者組合下的 `status`、候選調度對與 `matching_score` 是否仍合理，並將此步驟作為整體方案的穩健性檢查，而非第一輪主定案依據。
@@ -504,7 +504,7 @@ move_amount = move_share * max(source_empty_net, 0)
 - 比較容易撰寫研究方法與回測邏輯
 - 可避免 `buffer` 尚未穩定時，反過來干擾 `pressure` 的正式定案
 
-這個次序也與 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:80) 到 [權重資料.md](/Users/lee/Documents/BigData/context/權重資料.md:97) 的原則一致：`baseline` 與 `custom` 都只是候選設計依據，最終仍需回到一致的 `expanding window + T+1` 回測架構來決定採用值。
+這個次序也與附錄 A 的原則一致：`baseline` 與 `custom` 都只是候選設計依據，最終仍需回到一致的 `expanding window + T+1` 回測架構來決定採用值。
 
 因此，本研究較建議採：
 
@@ -790,7 +790,7 @@ move_amount = move_share * max(source_empty_net, 0)
 
 ## 七、結論
 
-若完全以 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md) 為準，則後續不應再把：
+若完全以 [bigdata.md](bigdata.md) 為準，則後續不應再把：
 
 ```text
 buffer = 1 - pressure
@@ -815,7 +815,7 @@ buffer = 1 - pressure
 
 本節目的不是重新發明公式，而是回答一個更實際的問題：
 
-> 以目前 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md) 規劃的資料表來看，哪些指標或模組可以直接做，哪些需要補人工規則，哪些在現階段資料不足下不宜硬做。
+> 以目前 [bigdata.md](bigdata.md) 規劃的資料表來看，哪些指標或模組可以直接做，哪些需要補人工規則，哪些在現階段資料不足下不宜硬做。
 
 分類原則如下：
 

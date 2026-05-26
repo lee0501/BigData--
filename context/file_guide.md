@@ -561,19 +561,19 @@ buffer_backtest_port_month.csv
 ### 7.1 從原始資料開始重跑
 
 ```r
-source("/Users/lee/Documents/BigData/context/build_master_table.R")
-source("/Users/lee/Documents/BigData/context/check_master_table.R")
-source("/Users/lee/Documents/BigData/context/build_analysis_table.R")
-source("/Users/lee/Documents/BigData/context/build_history_features.R")
-source("/Users/lee/Documents/BigData/context/build_weight_scenarios.R")
-source("/Users/lee/Documents/BigData/context/build_pressure_scenarios.R")
-source("/Users/lee/Documents/BigData/context/backtest_pressure_only.R")
-source("/Users/lee/Documents/BigData/context/build_buffer_scenarios_fixed_pressure.R")
-source("/Users/lee/Documents/BigData/context/backtest_buffer_fixed_pressure.R")
-source("/Users/lee/Documents/BigData/context/build_status_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_matching_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_simulation_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_simulation_recommendation_final_2025.R")
+source("context/build_master_table.R")
+source("context/check_master_table.R")
+source("context/build_analysis_table.R")
+source("context/build_history_features.R")
+source("context/build_weight_scenarios.R")
+source("context/build_pressure_scenarios.R")
+source("context/backtest_pressure_only.R")
+source("context/build_buffer_scenarios_fixed_pressure.R")
+source("context/backtest_buffer_fixed_pressure.R")
+source("context/build_status_final_2025.R")
+source("context/build_matching_final_2025.R")
+source("context/build_simulation_final_2025.R")
+source("context/build_simulation_recommendation_final_2025.R")
 ```
 
 ### 7.2 只想重跑正式回測與輸出
@@ -586,24 +586,24 @@ source("/Users/lee/Documents/BigData/context/build_simulation_recommendation_fin
 則可從這裡開始：
 
 ```r
-source("/Users/lee/Documents/BigData/context/build_pressure_scenarios.R")
-source("/Users/lee/Documents/BigData/context/backtest_pressure_only.R")
-source("/Users/lee/Documents/BigData/context/build_buffer_scenarios_fixed_pressure.R")
-source("/Users/lee/Documents/BigData/context/backtest_buffer_fixed_pressure.R")
-source("/Users/lee/Documents/BigData/context/build_status_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_matching_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_simulation_final_2025.R")
-source("/Users/lee/Documents/BigData/context/build_simulation_recommendation_final_2025.R")
+source("context/build_pressure_scenarios.R")
+source("context/backtest_pressure_only.R")
+source("context/build_buffer_scenarios_fixed_pressure.R")
+source("context/backtest_buffer_fixed_pressure.R")
+source("context/build_status_final_2025.R")
+source("context/build_matching_final_2025.R")
+source("context/build_simulation_final_2025.R")
+source("context/build_simulation_recommendation_final_2025.R")
 ```
 
 ### 7.3 只想重跑探索性比較
 
 ```r
-source("/Users/lee/Documents/BigData/context/build_weight_scenarios.R")
-source("/Users/lee/Documents/BigData/context/build_index_scenarios.R")
-source("/Users/lee/Documents/BigData/context/backtest_weight_scenarios.R")
-source("/Users/lee/Documents/BigData/context/build_matching_weight_scenarios.R")
-source("/Users/lee/Documents/BigData/context/backtest_matching_fixed_indices.R")
+source("context/build_weight_scenarios.R")
+source("context/build_index_scenarios.R")
+source("context/backtest_weight_scenarios.R")
+source("context/build_matching_weight_scenarios.R")
+source("context/backtest_matching_fixed_indices.R")
 ```
 
 ### 7.4 只想重跑 Forecast 預警實驗
@@ -615,7 +615,7 @@ source("/Users/lee/Documents/BigData/context/backtest_matching_fixed_indices.R")
 則可直接跑：
 
 ```r
-source("/Users/lee/Documents/BigData/context/backtest_forecast_high_pressure.R")
+source("context/backtest_forecast_high_pressure.R")
 ```
 
 ## 8. 目前最重要的結論怎麼讀
@@ -653,5 +653,5 @@ source("/Users/lee/Documents/BigData/context/backtest_forecast_high_pressure.R")
 3. [`app_formula_design.md`](app_formula_design.md)
 4. [`file_guide.md`](file_guide.md)
 5. [`weight_backtest_plan.md`](weight_backtest_plan.md)
-6. [`權重資料.md`](權重資料.md)
+6. [`app_formula_design.md`](app_formula_design.md)（附錄 A）：看權重設計的理論依據
 7. [`develop log.md`](develop%20log.md)

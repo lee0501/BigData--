@@ -273,7 +273,7 @@ move_amount = move_share * max(source_empty_net, 0)
 3. [`context/app_formula_design.md`](context/app_formula_design.md)：看指標、狀態分類、媒合與模擬公式。
 4. [`context/file_guide.md`](context/file_guide.md)：看所有 `R` 腳本、`csv` 產物、彼此依賴關係與執行順序。
 5. [`context/weight_backtest_plan.md`](context/weight_backtest_plan.md)：看權重回測方法、目前結果與限制。
-6. [`context/權重資料.md`](context/%E6%AC%8A%E9%87%8D%E8%B3%87%E6%96%99.md)：看權重設計的理論與研究依據。
+6. [`context/app_formula_design.md`](context/app_formula_design.md) 附錄 A：看權重設計的理論依據（ROC 法、交通部佐證、自治權重）。
 
 ## 執行與輸出主線
 
