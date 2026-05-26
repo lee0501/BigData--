@@ -82,6 +82,13 @@ build_port_baseline_bridge <- function(status_tbl, ym_value) {
     return(tibble())
   }
 
+  imarine_rows <- status_tbl %>%
+    filter(ym == ym_value, port %in% formal_ports)
+
+  if (nrow(imarine_rows) == 0 || all(imarine_rows$status == "資料暖機中")) {
+    return(tibble())
+  }
+
   yhat_rows <- port_baseline_forecast %>%
     filter(
       ym == ym_value,

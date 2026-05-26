@@ -205,14 +205,26 @@ register_forecast_outputs <- function(server_env) {
       })
 
       output$baseline_bridge_result <- renderUI({
+        imarine_check <- status_formal_display %>%
+          filter(ym == selected_ym(), port %in% formal_ports)
+
+        if (nrow(imarine_check) > 0 && all(imarine_check$status == "資料暖機中")) {
+          return(div(
+            class = "mode-note",
+            paste0(
+              fmt_ym(selected_ym()),
+              " 為 iMarine 資料暖機期（觀測月份不足三個月，壓力分類無統計意義），",
+              "無法與 Prophet 季節基準對照。請選擇 2025 年 3 月以後的月份。"
+            )
+          ))
+        }
+
         rows <- baseline_bridge_rows()
         if (nrow(rows) == 0) {
           return(NULL)
         }
 
         top_imarine <- rows %>% arrange(desc(pressure_index), desc(empty_net)) %>% slice(1)
-        top_baseline <- rows %>% arrange(desc(empty_share_vs_yhat), desc(total_vs_yhat)) %>% slice(1)
-        same_port <- identical(top_imarine$port[[1]], top_baseline$port[[1]])
 
         imarine_empty_ratio <- top_imarine$empty_share_vs_yhat[[1]]
         imarine_total_ratio <- top_imarine$total_vs_yhat[[1]]
@@ -223,14 +235,14 @@ register_forecast_outputs <- function(server_env) {
         )
 
         result_label <- case_when(
-          same_port && imarine_baseline_level != "符合季節性範圍" ~ "短期壓力 + 超出季節性預期",
-          imarine_baseline_level != "符合季節性範圍" ~ "短期壓力，接近季節性上界",
-          TRUE ~ "短期作業壓力"
+          imarine_baseline_level == "超出季節性預期" ~ "短期壓力 + 超出季節性預期",
+          imarine_baseline_level == "接近季節性上界" ~ "短期壓力，接近季節性上界",
+          TRUE ~ "短期作業壓力（季節正常範圍）"
         )
         response_text <- case_when(
-          same_port && imarine_baseline_level != "符合季節性範圍" ~ "優先追蹤，適合列入本月重點說明。",
-          imarine_baseline_level != "符合季節性範圍" ~ "依 iMarine 追蹤調度，同時標記為季節性觀察。",
-          TRUE ~ "依 iMarine 明細追蹤，壓力屬於季節性正常範圍。"
+          imarine_baseline_level == "超出季節性預期" ~ "優先追蹤，適合列入本月重點說明。",
+          imarine_baseline_level == "接近季節性上界" ~ "依 iMarine 追蹤調度，留意季節性背景偏高。",
+          TRUE ~ "依 iMarine 明細追蹤；壓力屬於該港季節正常範圍，對外說明可以季節背景帶過。"
         )
 
         decision_sentence <- paste0(
@@ -239,40 +251,36 @@ register_forecast_outputs <- function(server_env) {
           display_port(top_imarine$port[[1]]),
           " 是 iMarine 當月相對高壓港；與 Prophet 季節性基準相比，判定為「",
           imarine_baseline_level,
-          "」，因此本月應採「",
-          result_label,
-          "」解讀。"
+          "」。"
         )
 
         div(
           class = "baseline-decision-block",
           div(class = "baseline-decision-headline", decision_sentence),
           div(
+            class = "mode-note subtle",
+            "本欄位說明當月 iMarine 高壓港的壓力是否屬於季節性正常現象。若需預測下月風險，請查閱下方「未來觀察清單」。"
+          ),
+          div(
             class = "baseline-decision-grid",
-          div(
-            class = "baseline-decision-card status",
-            div(class = "baseline-decision-kicker", "1. iMarine 發現"),
-            div(class = "baseline-decision-title", display_port(top_imarine$port[[1]])),
-            div(class = "baseline-decision-sub", paste0("iMarine 壓力最高：", fmt_idx(top_imarine$pressure_index[[1]], 4)))
-          ),
-          div(
-            class = "baseline-decision-card meaning",
-            div(class = "baseline-decision-kicker", "2. 季節性基準檢查"),
-            div(class = "baseline-decision-title", imarine_baseline_level),
-            div(class = "baseline-decision-sub", paste0("對 Prophet 季節基準 yhat：空櫃占比 ", fmt_idx(imarine_empty_ratio, 2), "x；總量 ", fmt_idx(imarine_total_ratio, 2), "x"))
-          ),
-          div(
-            class = "baseline-decision-card result",
-            div(class = "baseline-decision-kicker", "3. 結論"),
-            div(class = "baseline-decision-title", result_label),
-            div(class = "baseline-decision-sub", response_text)
-          ),
-          div(
-            class = "baseline-decision-card action",
-            div(class = "baseline-decision-kicker", "4. 反應"),
-            div(class = "baseline-decision-title", if (same_port) "優先處理" else "分層追蹤"),
-            div(class = "baseline-decision-sub", paste0("季節基準最高：", display_port(top_baseline$port[[1]])))
-          )
+            div(
+              class = "baseline-decision-card status",
+              div(class = "baseline-decision-kicker", "1. iMarine 發現"),
+              div(class = "baseline-decision-title", display_port(top_imarine$port[[1]])),
+              div(class = "baseline-decision-sub", paste0("iMarine 壓力最高：", fmt_idx(top_imarine$pressure_index[[1]], 4)))
+            ),
+            div(
+              class = "baseline-decision-card meaning",
+              div(class = "baseline-decision-kicker", "2. 季節性基準檢查"),
+              div(class = "baseline-decision-title", imarine_baseline_level),
+              div(class = "baseline-decision-sub", paste0("對 Prophet 季節基準 yhat：空櫃占比 ", fmt_idx(imarine_empty_ratio, 2), "x；總量 ", fmt_idx(imarine_total_ratio, 2), "x"))
+            ),
+            div(
+              class = "baseline-decision-card result",
+              div(class = "baseline-decision-kicker", "3. 結論"),
+              div(class = "baseline-decision-title", result_label),
+              div(class = "baseline-decision-sub", response_text)
+            )
           )
         )
       })
