@@ -1,14 +1,38 @@
 branch
 
-| name | mean |
+| name | 用途 |
 | :---- | :---- |
-| main | for GitHub (use PR for request) |
-| codex/safe-edit-20260407 | testing |
-| feature/dashboard-r | for dashboard version commit |
-| feature/dashboard-formula | for dashboard present |
-| feature/data-preprocessing | data clean\&preprocessing commit |
-| feature/original-data | original download opendata (not cleaning) |
-| feature/history-features | 2.3歷史資料留對齊 |
+| main | GitHub 主線，透過 PR 合併 |
+| feature/prophet-port-stat-extension | 官方統計基準 + Prophet baseline + dashboard 文件整併（本 branch）|
+| feature/prophet-seasonal-yhat-baseline | Prophet yhat Bridge 對照、OOS 驗證、優先檢查清單 UI 改版 |
+| feature/dashboard-r | dashboard Shiny app 模組化版本 |
+| feature/dashboard-formula | dashboard 公式設計階段 |
+| feature/data-preprocessing | 資料清洗與前處理 |
+| feature/original-data | 原始開放資料下載（未清洗）|
+| feature/history-features | 2.3 歷史資料對齊 |
+| codex/safe-edit-20260407 | 測試用 |
+
+---
+
+### feature/prophet-port-stat-extension（2026-05）
+
+**目的**：將港務公司多年官方統計與 Prophet 模型整合進 dashboard，建立「官方基準」頁作為 iMarine 結果的背景判讀層；同步完成文件整併與術語統一。
+
+**主要內容**：
+
+- `build_port_stat_history.R`：整合港務公司官方月別統計（空實櫃個數 + TEU 方向別）
+- `build_port_stat_prophet_forecast.R`：Prophet 模型訓練、預測、回測、優先檢查清單建立
+- 官方基準頁（`mod_forecast.R / _server.R`）：
+  - 趨勢圖（多年空櫃占比 + 歷史擬合 + 延伸預測）
+  - Bridge 對照（iMarine 高壓港 × Prophet yhat 往年同月預期）
+  - 優先檢查清單（含 2025 OOS 驗證段 + 2026-01~04 橋接段 + 2026-05 以後預測段）
+  - 模型可信度說明（MAE / MAPE，頁面底部）
+- UI 術語統一：「預警分數」→「優先檢查分數」、「Prophet 季節基準」→「往年同月預期」
+- 文件整併：
+  - 刪除：`D.資料分析模式與方法.md`、`E.研究流程及推論邏輯.md`、`context/table.md`、`資料運用來源細節表.md`
+  - 合併：`dashboard README.md` + `context/dashboard_structure_freeze.md` → `context/dashboard_guide.md`
+  - 吸收：`context/權重資料.md` → `context/app_formula_design.md`（附錄 A）
+  - 更新：`context/bigdata.md`（加入官方統計 Layer 1 + Layer 6）、`context/app_formula_design.md`（更名 + 吸收）
 
 ### 0407 commit history
 

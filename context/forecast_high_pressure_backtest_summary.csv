@@ -1,0 +1,5 @@
+window,window_note,model,model_note,n_rows,n_eval_months,first_origin_ym,last_origin_ym,positive_cases,pooled_auc,top1_hit_rate,top2_hit_rate,top2_recall,mean_positive_rank
+official,正式口徑：來源月 history_n >= 3，且可觀察下一月結果。,pressure_index_streak_boost,"在 pressure_index 上加入連續淨流入月數加權：pressure_index + 0.05 * pmin(positive_net_streak, 6)",36,9,202503,202511,16,0.825,0.8888888888888888,1,0.75,1.875
+official,正式口徑：來源月 history_n >= 3，且可觀察下一月結果。,baseline_pressure_index,直接用當月 pressure_index 當下月風險排序,36,9,202503,202511,16,0.7515625,0.7777777777777778,1,0.6875,2.125
+warmup_included,暖機納入：允許 2025-02 作為來源月，但要求目標月已進入 history_n >= 3。,pressure_index_streak_boost,"在 pressure_index 上加入連續淨流入月數加權：pressure_index + 0.05 * pmin(positive_net_streak, 6)",40,10,202502,202511,18,0.7803030303030303,0.9,1,0.7222222222222222,1.9444444444444444
+warmup_included,暖機納入：允許 2025-02 作為來源月，但要求目標月已進入 history_n >= 3。,baseline_pressure_index,直接用當月 pressure_index 當下月風險排序,40,10,202502,202511,18,0.696969696969697,0.8,1,0.6666666666666666,2.1666666666666665
