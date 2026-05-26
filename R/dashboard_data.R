@@ -12,6 +12,21 @@ dashboard_context_files <- c(
   "port_pair_distance_lookup.csv"
 )
 
+file_role_map <- c(
+  "status_final_2025.csv"                    = "iMarine 正式輸出 - 各港口每月壓力狀態",
+  "matching_final_2025.csv"                  = "iMarine 正式輸出 - 跨港媒合候選配對",
+  "simulation_recommendation_final_2025.csv" = "iMarine 正式輸出 - 調度模擬推薦摘要",
+  "simulation_final_2025.csv"                = "iMarine 正式輸出 - 調度模擬各情境明細",
+  "analysis_table_2025.csv"                  = "iMarine 正式輸出 - 港口分析時序表（2025）",
+  "analysis_table_history_2025.csv"          = "iMarine 正式輸出 - 港口分析時序表（含歷史）",
+  "master_table_2025.csv"                    = "iMarine 正式輸出 - 主表（壓力 / 緩衝指數計算來源）",
+  "port_pair_distance_lookup.csv"            = "靜態查找表 - 港口對距離",
+  "port_stat_prophet_base.csv"               = "港務公司官方統計 - 多年空櫃流量（Prophet 模型訓練資料）",
+  "port_stat_prophet_forecast.csv"           = "Prophet 輸出 - 多年預測值與信賴區間",
+  "port_stat_prophet_backtest.csv"           = "Prophet 輸出 - 回測（以 2025-10 前訓練預測後續月份）",
+  "port_stat_prophet_latest_watchlist.csv"   = "Prophet 輸出 - 優先檢查清單（含 2025 OOS 驗證 + 2026 預測）"
+)
+
 build_data_origin_report <- function() {
   available_ym <- if (exists("status_final", inherits = TRUE)) {
     sort(unique(get("status_final", inherits = TRUE)$ym))
@@ -19,22 +34,20 @@ build_data_origin_report <- function() {
     integer()
   }
 
+  all_files <- union(dashboard_context_files, names(file_role_map))
+
   file_lines <- vapply(
-    dashboard_context_files,
+    all_files,
     function(file_name) {
       file_path <- file.path(context_dir, file_name)
-      sprintf("%-45s %s", file_name, ifelse(file.exists(file_path), "OK", "MISSING"))
+      status    <- ifelse(file.exists(file_path), "OK     ", "MISSING")
+      role      <- file_role_map[[file_name]] %||% ""
+      sprintf("%-45s %s  %s", file_name, status, role)
     },
     character(1)
   )
 
   c(
-    "Project directory:",
-    app_dir,
-    "",
-    "Context directory:",
-    context_dir,
-    "",
     "資料檔案狀態:",
     file_lines,
     "",

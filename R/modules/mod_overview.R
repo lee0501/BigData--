@@ -47,12 +47,12 @@ overview_page_ui <- function() {
         class = "c-inner",
         div(
           class = "c-head",
-          span(class = "c-title", "次月風險排序"),
-          span(class = "c-chip", "簡單預警")
+          span(class = "c-title", "下月優先檢查排序"),
+          span(class = "c-chip", "非正式預測")
         ),
         div(
           class = "mode-note",
-          HTML("依 <strong>pressure_index_streak_boost</strong>（當月壓力指數 + 連續淨流入月數加權）排序，推測下月高壓港優先對象。非 Prophet 模型；正式口徑 9 個月回測，top1 命中率 88.9%。若需季節性背景驗證，請前往「官方統計基準」頁。")
+          HTML("依當月壓力程度與連續淨流入月數排序，列出下個月更新 iMarine 明細後應優先確認的港口。9 個月回測 top1 命中率 88.9%，供提前關注使用，不代表正式高壓結論。（評分方式：<code>pressure_index_streak_boost</code> = 當月壓力指數 + 連續淨流入月數加權）")
         ),
         uiOutput("overview_next_month_watchlist")
       )

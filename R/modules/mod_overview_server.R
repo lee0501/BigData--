@@ -268,7 +268,7 @@ register_overview_outputs <- function(server_env) {
         if (!next_month_available) {
           return(div(
             class = "mode-note",
-            "尚未產生次月風險排序資料，請執行 context/backtest_forecast_high_pressure.R。"
+            "尚未產生下月優先檢查資料，請執行 context/backtest_forecast_high_pressure.R。"
           ))
         }
 

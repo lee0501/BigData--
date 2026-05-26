@@ -214,7 +214,7 @@ register_forecast_outputs <- function(server_env) {
             paste0(
               fmt_ym(selected_ym()),
               " 為 iMarine 資料暖機期（觀測月份不足三個月，壓力分類無統計意義），",
-              "無法與 Prophet 季節基準對照。請選擇 2025 年 3 月以後的月份。"
+              "無法與往年同月資料對照。請選擇 2025 年 3 月以後的月份。"
             )
           ))
         }
@@ -295,7 +295,7 @@ register_forecast_outputs <- function(server_env) {
               tags$th("#"),
               tags$th("港口"),
               tags$th("iMarine"),
-              tags$th("Prophet 季節基準"),
+              tags$th("往年同月預期（yhat）"),
               tags$th("判讀")
             )),
             tags$tbody(
@@ -305,7 +305,7 @@ register_forecast_outputs <- function(server_env) {
                 tagList(lapply(seq_len(nrow(rows)), function(i) {
                   row <- rows[i, ]
                   imarine_label <- paste0(row$status, "｜", fmt_idx(row$pressure_index, 4))
-                  baseline_label <- paste0(fmt_pct(row$empty_share_count, 1), "｜季節預期 ", fmt_idx(row$empty_share_vs_yhat, 2), "x")
+                  baseline_label <- paste0(fmt_pct(row$empty_share_count, 1), "｜往年同月預期 ", fmt_idx(row$empty_share_vs_yhat, 2), "x")
                   tags$tr(
                     tags$td(class = "dt-row-num", i),
                     tags$td(display_port(row$port)),

@@ -13,7 +13,8 @@ matching_page_ui <- function() {
                 class = "c-head",
                 div(
                   div(class = "c-title", "調度配對設定"),
-                div(class = "c-subtitle", "設定來源港口與調度參數後，下方候選方案會依目前公式即時重算")
+                div(class = "c-subtitle", "設定來源港口與調度參數後，下方候選方案會依目前公式即時重算"),
+                div(class = "mode-note", style = "margin-top:6px;", "以下為候選方案排序，供研究參考，不代表正式唯一調度決策")
               ),
               div(
                 style = "display:flex;align-items:center;gap:12px;",
