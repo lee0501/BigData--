@@ -324,11 +324,11 @@ buffer_backtest_port_month.csv
   - 把 forecast 實驗拆成兩個窗口：
     - `official`：來源月 `history_n >= 3`
     - `warmup_included`：允許 `2025-02 -> 2025-03` 納入，但不把它混進正式主結論
-  - 比較兩種下月高壓力預警分數：
+  - 比較兩種下月優先檢查分數：
     - `baseline_pressure_index`
     - `pressure_index_streak_boost`
 - 這張表在說明什麼：
-  - `forecast_high_pressure_backtest_summary.csv`：兩個窗口下，哪個預警分數較適合拿來做下月 watchlist。
+  - `forecast_high_pressure_backtest_summary.csv`：兩個窗口下，哪個優先檢查分數較適合拿來做下月 watchlist。
   - `forecast_high_pressure_backtest_detail.csv`：逐月逐港的回測明細與月內排序。
   - `forecast_high_pressure_latest_watchlist.csv`：最新月份往下一月的實務觀察清單。
 - 使用定位：
