@@ -227,14 +227,14 @@ www/
 ### 方法一：R console
 
 ```r
-source("/Users/lee/Documents/BigData/iMarine_dashboard.R")
+source("iMarine_dashboard.R")
 shiny::runApp(app, launch.browser = TRUE)
 ```
 
 ### 方法二：Terminal
 
 ```bash
-Rscript /Users/lee/Documents/BigData/iMarine_dashboard.R
+Rscript iMarine_dashboard.R
 ```
 
 啟動後瀏覽器打開本地網址即可。左側 sidebar 可切換正式模式 / 探索模式；官方基準頁為獨立頁面，在導覽列中選取。

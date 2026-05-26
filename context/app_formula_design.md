@@ -80,7 +80,7 @@
 
 ---
 
-## 三、公式設計草案
+## 三、正式公式設計
 
 ## 3.1 空櫃流動構面
 
@@ -692,9 +692,9 @@ move_amount = move_share * max(source_empty_net, 0)
 
 ---
 
-## 五、與目前 `app.R` 的對照
+## 五、與早期 prototype 的差異
 
-### `app.R` 目前保留即可的概念
+### 早期 prototype 保留的概念
 
 - `empty_in`
 - `empty_out`
@@ -702,7 +702,7 @@ move_amount = move_share * max(source_empty_net, 0)
 - `throughput`
 - 壓力/緩衝/媒合/模擬四個頁面架構
 
-### `app.R` 目前不建議沿用的公式
+### 早期 prototype 不建議沿用的公式
 
 ```text
 pressure = empty_in / throughput
@@ -715,7 +715,7 @@ buffer = 1 - pressure
 - `buffer` 與 `pressure` 完全鏡像，沒有獨立分析意義
 - 不符合 markdown 要求的「流動、壓力、緩衝」三構面分離
 
-### `app.R` 目前需改成動態生成的部分
+### 早期 prototype 需改成動態生成的部分
 
 - `status`：應由歷史相對門檻計算
 - `matching_data`：應由高壓力港 × 高緩衝港自動生成
