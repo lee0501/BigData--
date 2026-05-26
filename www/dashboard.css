@@ -25,15 +25,19 @@
     padding: 0;
     box-sizing: border-box;
 }
-html, body {
+html {
+    min-height: 100%;
+    font-size: 18px;
+}
+body {
     min-height: 100%;
 }
 body {
     font-family: 'Inter', 'Noto Sans TC', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-size: 18.5px;
-    line-height: 1.68;
+    font-size: 20px;
+    line-height: 1.7;
 }
 .app {
     display: flex;

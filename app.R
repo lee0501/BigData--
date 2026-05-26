@@ -28,8 +28,10 @@ source_files <- c(
   "R/dashboard_server.R"
 )
 
+app_env <- environment()
 for (rel_path in source_files) {
-  source(file.path(source_root, rel_path), local = FALSE)
+  sys.source(file.path(source_root, rel_path), envir = app_env)
 }
 
-shinyApp(ui, server)
+app <- shinyApp(ui, server)
+app
