@@ -166,15 +166,56 @@ distance_detail <- if (file.exists(distance_detail_path)) {
   )
 }
 
-next_month_watchlist <- {
-  p <- file.path(context_dir, "forecast_high_pressure_latest_watchlist.csv")
-  if (file.exists(p)) {
-    read_csv(p, show_col_types = FALSE) %>%
-      mutate(port = normalize_port(port)) %>%
-      arrange(selected_rank)
+next_month_forecast <- {
+  detail_path   <- file.path(context_dir, "forecast_high_pressure_backtest_detail.csv")
+  watchlist_path <- file.path(context_dir, "forecast_high_pressure_latest_watchlist.csv")
+  summary_path  <- file.path(context_dir, "forecast_high_pressure_backtest_summary.csv")
+
+  from_detail <- if (file.exists(detail_path)) {
+    read_csv(detail_path, show_col_types = FALSE) %>%
+      filter(window == "official", model == "pressure_index_streak_boost") %>%
+      mutate(
+        port = normalize_port(port),
+        forecast_priority = case_when(
+          rank_within_origin == 1L ~ "高預警",
+          rank_within_origin == 2L ~ "觀察",
+          TRUE ~ "低優先"
+        )
+      ) %>%
+      select(
+        origin_ym, target_ym, port,
+        rank      = rank_within_origin,
+        score     = forecast_score,
+        positive_net_streak,
+        empty_net,
+        forecast_priority
+      )
   } else {
     tibble()
   }
+
+  from_watchlist <- if (file.exists(watchlist_path)) {
+    read_csv(watchlist_path, show_col_types = FALSE) %>%
+      mutate(port = normalize_port(port)) %>%
+      select(
+        origin_ym, target_ym, port,
+        rank      = selected_rank,
+        score     = selected_score,
+        positive_net_streak,
+        empty_net,
+        forecast_priority
+      )
+  } else {
+    tibble()
+  }
+
+  bind_rows(from_detail, from_watchlist) %>%
+    mutate(
+      origin_ym = as.integer(origin_ym),
+      target_ym = as.integer(target_ym)
+    ) %>%
+    distinct(origin_ym, port, .keep_all = TRUE) %>%
+    arrange(origin_ym, rank)
 }
 
 next_month_backtest_top1 <- {
@@ -188,4 +229,4 @@ next_month_backtest_top1 <- {
   }
 }
 
-next_month_available <- nrow(next_month_watchlist) > 0
+next_month_available <- nrow(next_month_forecast) > 0

@@ -272,9 +272,22 @@ register_overview_outputs <- function(server_env) {
           ))
         }
 
-        rows <- next_month_watchlist
+        rows <- next_month_forecast %>% filter(origin_ym == selected_ym())
+
+        if (nrow(rows) == 0) {
+          avail <- sort(unique(next_month_forecast$origin_ym))
+          return(div(
+            class = "mode-note",
+            paste0(
+              fmt_ym(selected_ym()),
+              " 無次月預測資料（可用月份：",
+              paste(fmt_ym(avail), collapse = "、"),
+              "）。"
+            )
+          ))
+        }
+
         target_ym <- rows$target_ym[[1]]
-        origin_ym  <- rows$origin_ym[[1]]
 
         priority_class <- function(p) {
           switch(p, "高預警" = "danger", "觀察" = "highlight", "")
@@ -283,7 +296,7 @@ register_overview_outputs <- function(server_env) {
         tagList(
           div(
             class = "mode-note subtle",
-            paste0("來源月：", fmt_ym(origin_ym), "　→　預測目標月：", fmt_ym(target_ym))
+            paste0("來源月：", fmt_ym(selected_ym()), "　→　預測目標月：", fmt_ym(target_ym))
           ),
           div(
             class = "dt-table-wrap has-scroll",
@@ -301,10 +314,10 @@ register_overview_outputs <- function(server_env) {
                 tagList(lapply(seq_len(nrow(rows)), function(i) {
                   row <- rows[i, ]
                   tags$tr(
-                    tags$td(class = "dt-row-num", row$selected_rank),
+                    tags$td(class = "dt-row-num", row$rank),
                     tags$td(display_port(row$port)),
                     tags$td(class = priority_class(row$forecast_priority), row$forecast_priority),
-                    tags$td(class = "dt-mono", fmt_idx(row$selected_score, 3)),
+                    tags$td(class = "dt-mono", fmt_idx(row$score, 3)),
                     tags$td(row$positive_net_streak),
                     tags$td(fmt_num(row$empty_net, 0))
                   )
