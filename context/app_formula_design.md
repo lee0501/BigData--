@@ -282,7 +282,7 @@ buffer_export_raw = export_pull
 
 依 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L262) 到 [bigdata.md](/Users/lee/Documents/BigData/context/bigdata.md#L276)，分類應採相對門檻，而非固定 TEU 或固定比例。
 
-在港口壓力衡量上，理論上較理想的做法應是以實際吞吐量相對於設計容量或堆場容量作為基準；但目前公開資料缺乏一致且可追溯的 `capacity`、`yard_capacity` 或 `occupancy_ratio`，因此本研究無法直接建立傳統意義上的 utilization ratio。這一點的補充說明可見 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:7>) 到 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:18>)。
+在港口壓力衡量上，理論上較理想的做法應是以實際吞吐量相對於設計容量或堆場容量作為基準；但目前公開資料缺乏一致且可追溯的 `capacity`、`yard_capacity` 或 `occupancy_ratio`，因此本研究無法直接建立傳統意義上的 utilization ratio。這一點的補充說明見研究備忘錄「3.4 | 0.5 _ 0.75 定義」第 7–18 行。
 
 因此，本研究改以 `throughput` 作為容量代理變數，先在各港口內部用歷史 percent-rank 建立 `pressure_index` 與 `buffer_index`，再於每個月份 `t` 的港口橫截面上，以 percentile-based threshold 進行分類。這裡要特別區分兩層：
 
@@ -291,7 +291,7 @@ buffer_export_raw = export_pull
 
 ### 為何採用分位數門檻
 
-[3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:11>) 到 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:61>) 已整理三個核心理由：
+研究備忘錄「3.4 | 0.5 _ 0.75 定義」第 11–61 行已整理三個核心理由：
 
 - 港口規模高度異質，固定絕對門檻不利跨港比較
 - 公開資料缺乏真實 capacity，無法建立一致的 occupancy ratio
@@ -310,9 +310,9 @@ low_pressure_cut  = t 月橫截面 pressure_index 的 0.50 分位
 其門檻意義如下：
 
 - `Q75` 用於 `high_pressure_cut` 與 `high_buffer_cut`  
-  代表當月相對位置落在前 25% 的高區段港口，適合作為 early warning 與優先辨識的 baseline。此點可見 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:38>) 到 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:52>)。
+  代表當月相對位置落在前 25% 的高區段港口，適合作為 early warning 與優先辨識的 baseline。
 - `Q50` 用於 `low_pressure_cut`  
-  代表「不高於常態」的上界，用來避免只有極低壓港才能成為承接候選，導致候選港口過少。此點可見 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:54>) 到 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:61>)。
+  代表「不高於常態」的上界，用來避免只有極低壓港才能成為承接候選，導致候選港口過少。
 
 若採 `T+1` 架構，則這些 cut 不應以全年度資料回頭統一設定，而應在每個月 `t` 用當月可得的港口橫截面重新計算。
 
@@ -335,7 +335,7 @@ else
 
 - `高壓力港` 不能只看 `pressure_index` 高，還需確認近期確實在累積，即 `roll3_empty_net > 0`
 - `高緩衝港` 不能只看 `buffer_index` 高，也要排除已經接近高壓力的港口，因此需同時滿足 `buffer_index >= Q75` 與 `pressure_index <= Q50`
-- 這套設計的目的是建立 `source（高壓） -> target（高 buffer 且不高壓）` 的分類基礎，避免形成「把櫃子從一個高壓港移到另一個即將高壓的港」的連環問題。這個邏輯可見 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:48>) 到 [3.4 | 0.5 _ 0.75 定義.md](</Users/lee/Downloads/3.4 | 0.5 _ 0.75 定義.md:61>)。
+- 這套設計的目的是建立 `source（高壓） -> target（高 buffer 且不高壓）` 的分類基礎，避免形成「把櫃子從一個高壓港移到另一個即將高壓的港」的連環問題。
 - `Q75` 與 `Q50` 目前應視為 baseline threshold，而非最終不可調整值；待 3.2 與 3.3 穩定後，仍可在相同 expanding window 與 `T+1` 架構下再做有限度微調。
 
 ---
@@ -364,12 +364,9 @@ source_port != target_port
 
 ### 距離矩陣與 `distance_class`
 
-本研究目前不直接使用真實運價或完整成本模型，而是先以港對距離作為調度阻力 proxy。距離分級可參考：
+本研究目前不直接使用真實運價或完整成本模型，而是先以港對距離作為調度阻力 proxy。距離資料來源為研究備忘錄「Distance_Matrix - 距離 / 說明」，已整合進 `context/input/` 並輸出為 `port_pair_distance_lookup.csv`。
 
-- [Distance_Matrix - 距離.csv](</Users/lee/Downloads/Distance_Matrix - 距離.csv:1>)
-- [Distance_Matrix - 說明.csv](</Users/lee/Downloads/Distance_Matrix - 說明.csv:1>) 到 [Distance_Matrix - 說明.csv](</Users/lee/Downloads/Distance_Matrix - 說明.csv:9>)
-
-[Distance_Matrix - 說明.csv](</Users/lee/Downloads/Distance_Matrix - 說明.csv:1>) 說明目前級距是以最遠距離除以 3 作為簡化切分基礎，因此可定義：
+距離分級以最遠港對距離除以 3 作為簡化切分基礎，因此可定義：
 
 ```text
 distance_class = 1 : 0 - 195 km
@@ -386,7 +383,7 @@ distance_class = 3 : 390 km 以上
 - 台北港 - 高雄港：`527.4 km`，屬 `distance_class = 3`
 - 台中港 - 高雄港：`420.2 km`，屬 `distance_class = 3`
 
-對應矩陣則可見 [Distance_Matrix - 距離.csv](</Users/lee/Downloads/Distance_Matrix - 距離.csv:2>) 到 [Distance_Matrix - 距離.csv](</Users/lee/Downloads/Distance_Matrix - 距離.csv:5>)。
+對應距離數值已整合進 `context/input/` 的距離矩陣原始資料。
 
 ### `distance_factor` 映射
 

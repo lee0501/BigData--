@@ -642,8 +642,8 @@ source("/Users/lee/Documents/BigData/context/backtest_forecast_high_pressure.R")
 
 ## 9. 操作注意事項
 
-- 目前多支腳本使用硬編碼絕對路徑，特別是原始 `csv` 與距離矩陣來源位於 `/Users/lee/Downloads`。
-- 若原始資料檔案位置改變，需先調整腳本中的 `input_path`。
+- 原始 CSV 與距離矩陣原始資料已整合進 `context/input/` 目錄，腳本讀取路徑均已改為相對於專案目錄，不再使用本機絕對路徑。
+- 若原始資料檔案有更新，替換 `context/input/` 下對應的檔案後重新執行各腳本即可。
 - 儀表板腳本依賴 `context/` 目錄下的最終輸出表，因此若最終 `csv` 未更新，儀表板看到的也會是舊結果。
 
 ## 10. 建議閱讀順序

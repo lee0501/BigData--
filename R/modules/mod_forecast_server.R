@@ -295,7 +295,7 @@ register_forecast_outputs <- function(server_env) {
               tags$th("#"),
               tags$th("港口"),
               tags$th("iMarine"),
-              tags$th("往年同月預期（yhat）"),
+              tags$th("往年同月預期"),
               tags$th("判讀")
             )),
             tags$tbody(
@@ -305,7 +305,7 @@ register_forecast_outputs <- function(server_env) {
                 tagList(lapply(seq_len(nrow(rows)), function(i) {
                   row <- rows[i, ]
                   imarine_label <- paste0(row$status, "｜", fmt_idx(row$pressure_index, 4))
-                  baseline_label <- paste0(fmt_pct(row$empty_share_count, 1), "｜往年同月預期 ", fmt_idx(row$empty_share_vs_yhat, 2), "x")
+                  baseline_label <- paste0(fmt_pct(row$empty_share_count, 1), "｜預期 ", fmt_idx(row$empty_share_vs_yhat, 2), " 倍")
                   tags$tr(
                     tags$td(class = "dt-row-num", i),
                     tags$td(display_port(row$port)),

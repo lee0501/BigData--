@@ -306,7 +306,7 @@ register_overview_outputs <- function(server_env) {
                 tags$th("排序"),
                 tags$th("港口"),
                 tags$th("風險等級"),
-                tags$th("預警分數"),
+                tags$th("優先檢查分數"),
                 tags$th("連續淨流入月數"),
                 tags$th("空櫃淨流量")
               )),
