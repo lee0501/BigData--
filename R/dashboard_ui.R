@@ -22,6 +22,7 @@ ui <- fluidPage(
         tabPanel(title = NULL, value = "analysis", analysis_page_ui()),
         tabPanel(title = NULL, value = "matching", matching_page_ui()),
         tabPanel(title = NULL, value = "explore", explore_page_ui()),
+        tabPanel(title = NULL, value = "forecast", forecast_page_ui()),
         tabPanel(title = NULL, value = "provenance", provenance_page_ui())
       )
     )

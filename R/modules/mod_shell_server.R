@@ -30,6 +30,12 @@ register_shell_outputs <- function(server_env) {
             "<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M12 3v18M3 12h18'/></svg>"
           ),
           nav_tab(
+            "forecast",
+            "官方基準",
+            identical(current_page, "forecast"),
+            "<svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M3 3v18h18'/><path d='m7 15 4-4 3 3 5-7'/></svg>"
+          ),
+          nav_tab(
             "provenance",
             "資料來歷",
             identical(current_page, "provenance"),
@@ -42,9 +48,7 @@ register_shell_outputs <- function(server_env) {
         if (active_mode() == "formal") {
           div(
             class = "mode-note",
-            tags$strong("正式模式"),
-            tags$br(),
-            "高壓 / 高緩衝採月內相對門檻（Q75 / Q50）分類，再搭配近三月淨增加條件；因此 80% 或 100% 只是相對指標值，不保證一定是正式高壓。"
+            tags$strong("正式模式")
           )
         } else {
           div(

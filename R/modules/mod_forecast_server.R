@@ -150,12 +150,12 @@ register_forecast_outputs <- function(server_env) {
         future_peak <- max(forecast_future$yhat, na.rm = TRUE)
         future_peak_ratio <- safe_divide(future_peak, hist_q75)
         baseline_label <- case_when(
-          future_peak_ratio >= 1.10 ~ "偏高",
-          future_peak_ratio >= 0.95 ~ "接近高位",
-          TRUE ~ "低於高位"
+          future_peak_ratio >= 1.10 ~ "高於往年高點",
+          future_peak_ratio >= 0.95 ~ "接近往年高點",
+          TRUE ~ "低於往年高點"
         )
         reason_text <- paste0(
-          "依該港 110-115 年同月份型態與近期走勢延伸，",
+          "根據 110-115 年同月份的歷史型態延伸，",
           fmt_ym(first_forecast$ym[[1]]),
           " 至 ",
           fmt_ym(last_forecast$ym[[1]]),
@@ -166,8 +166,8 @@ register_forecast_outputs <- function(server_env) {
           "。"
         )
         threshold_text <- paste0(
-          "「偏高」表示未來預測最高值超過同港多年歷史 Q75 的 1.10 倍；",
-          "「接近高位」為 0.95 至 1.10 倍；目前最高為 ",
+          "「高於往年高點」表示預測最高值已超過往年同期歷史高位；",
+          "「接近往年高點」表示接近但尚未超過；目前預測最高值是往年高點的 ",
           fmt_idx(future_peak_ratio, 2),
           " 倍。"
         )
@@ -180,25 +180,25 @@ register_forecast_outputs <- function(server_env) {
                 class = "baseline-trend-pill",
                 span(class = "baseline-trend-label", "最新實際"),
                 strong(fmt_pct(actual_latest$empty_share_count[[1]], 1)),
-                span(paste0("同港多年 Q75 ", fmt_idx(latest_ratio, 2), "x"))
+                span(paste0("往年高點的 ", fmt_idx(latest_ratio, 2), " 倍"))
               ),
               div(
                 class = "baseline-trend-pill",
-                span(class = "baseline-trend-label", "未來方向"),
+                span(class = "baseline-trend-label", "未來走向"),
                 strong(trend_label),
                 span(paste0(fmt_pct(first_forecast$yhat[[1]], 1), " → ", fmt_pct(last_forecast$yhat[[1]], 1)))
               ),
               div(
                 class = "baseline-trend-pill",
-                span(class = "baseline-trend-label", "未來高位判斷"),
+                span(class = "baseline-trend-label", "未來走勢研判"),
                 strong(baseline_label),
-                span(paste0("最高為同港多年 Q75 ", fmt_idx(future_peak_ratio, 2), "x"))
+                span(paste0("預測最高為往年高點的 ", fmt_idx(future_peak_ratio, 2), " 倍"))
               )
             ),
             div(
               class = "baseline-interpretation",
-              div(strong("為什麼是這個方向："), reason_text),
-              div(strong("高位判斷意思："), threshold_text)
+              div(strong("預測走勢依據："), reason_text),
+              div(strong("高點研判說明："), threshold_text)
             )
           )
         )
@@ -229,27 +229,27 @@ register_forecast_outputs <- function(server_env) {
         imarine_empty_ratio <- top_imarine$empty_share_vs_yhat[[1]]
         imarine_total_ratio <- top_imarine$total_vs_yhat[[1]]
         imarine_baseline_level <- case_when(
-          imarine_empty_ratio >= 1.10 | imarine_total_ratio >= 1.10 ~ "超出季節性預期",
-          imarine_empty_ratio >= 0.95 | imarine_total_ratio >= 0.95 ~ "接近季節性上界",
-          TRUE ~ "符合季節性範圍"
+          imarine_empty_ratio >= 1.10 | imarine_total_ratio >= 1.10 ~ "高於往年同期",
+          imarine_empty_ratio >= 0.95 | imarine_total_ratio >= 0.95 ~ "略高於往年同期",
+          TRUE ~ "與往年同期相近"
         )
 
         result_label <- case_when(
-          imarine_baseline_level == "超出季節性預期" ~ "短期壓力 + 超出季節性預期",
-          imarine_baseline_level == "接近季節性上界" ~ "短期壓力，接近季節性上界",
-          TRUE ~ "短期作業壓力（季節正常範圍）"
+          imarine_baseline_level == "高於往年同期" ~ "壓力偏高，且高於往年同期",
+          imarine_baseline_level == "略高於往年同期" ~ "壓力偏高，往年同期本來就略高",
+          TRUE ~ "壓力偏高，但往年同期屬正常水準"
         )
         response_text <- case_when(
-          imarine_baseline_level == "超出季節性預期" ~ "優先追蹤，適合列入本月重點說明。",
-          imarine_baseline_level == "接近季節性上界" ~ "依 iMarine 追蹤調度，留意季節性背景偏高。",
-          TRUE ~ "依 iMarine 明細追蹤；壓力屬於該港季節正常範圍，對外說明可以季節背景帶過。"
+          imarine_baseline_level == "高於往年同期" ~ "建議優先追蹤，這是今年出現的異常增加，不只是每年固定的季節起伏。",
+          imarine_baseline_level == "略高於往年同期" ~ "持續追蹤，這個時間點歷來就偏高，留意是否繼續走高。",
+          TRUE ~ "依 iMarine 追蹤調度；往年這個時期空櫃量本來就多，對外說明可以說屬正常季節性波動。"
         )
 
         decision_sentence <- paste0(
           fmt_ym(selected_ym()),
           "：",
           display_port(top_imarine$port[[1]]),
-          " 是 iMarine 當月相對高壓港；與 Prophet 季節性基準相比，判定為「",
+          " 是本月壓力最高的港口；對照往年同月份官方統計，判定為「",
           imarine_baseline_level,
           "」。"
         )
@@ -258,26 +258,26 @@ register_forecast_outputs <- function(server_env) {
           class = "baseline-decision-block",
           div(class = "baseline-decision-headline", decision_sentence),
           div(
-            class = "mode-note subtle",
-            "本欄位說明當月 iMarine 高壓港的壓力是否屬於季節性正常現象。若需預測下月風險，請查閱下方「未來觀察清單」。"
-          ),
-          div(
             class = "baseline-decision-grid",
             div(
               class = "baseline-decision-card status",
-              div(class = "baseline-decision-kicker", "1. iMarine 發現"),
+              div(class = "baseline-decision-kicker", "本月發現"),
               div(class = "baseline-decision-title", display_port(top_imarine$port[[1]])),
-              div(class = "baseline-decision-sub", paste0("iMarine 壓力最高：", fmt_idx(top_imarine$pressure_index[[1]], 4)))
+              div(class = "baseline-decision-sub", paste0(
+                "壓力指數 ", fmt_idx(top_imarine$pressure_index[[1]], 4),
+                "，歷史上只有 ", round((1 - top_imarine$pressure_index[[1]]) * 100),
+                "% 的月份比這個月更高"
+              ))
             ),
             div(
               class = "baseline-decision-card meaning",
-              div(class = "baseline-decision-kicker", "2. 季節性基準檢查"),
+              div(class = "baseline-decision-kicker", "同期判斷"),
               div(class = "baseline-decision-title", imarine_baseline_level),
-              div(class = "baseline-decision-sub", paste0("對 Prophet 季節基準 yhat：空櫃占比 ", fmt_idx(imarine_empty_ratio, 2), "x；總量 ", fmt_idx(imarine_total_ratio, 2), "x"))
+              div(class = "baseline-decision-sub", paste0("今年此月空櫃占比為往年同月預期的 ", fmt_idx(imarine_empty_ratio, 2), " 倍"))
             ),
             div(
               class = "baseline-decision-card result",
-              div(class = "baseline-decision-kicker", "3. 結論"),
+              div(class = "baseline-decision-kicker", "處理建議"),
               div(class = "baseline-decision-title", result_label),
               div(class = "baseline-decision-sub", response_text)
             )
@@ -321,37 +321,68 @@ register_forecast_outputs <- function(server_env) {
       })
 
       output$baseline_watchlist_table <- renderUI({
-        rows <- latest_port_baseline_watchlist(nrow(port_baseline_watchlist))
+        all_rows <- port_baseline_watchlist %>%
+          filter(ym > selected_ym()) %>%
+          arrange(ym, desc(proxy_risk_score))
+
         risk_label <- c(normal = "正常", watch = "觀察", high = "偏高")
+        has_validation <- any(all_rows$is_validation, na.rm = TRUE)
+
+        error_cell <- function(row) {
+          if (!isTRUE(row$is_validation[[1]]) || is.na(row$actual_empty_share[[1]])) {
+            return(tags$td(class = "dt-empty-cell", "—"))
+          }
+          err <- (row$actual_empty_share[[1]] - row$pred_empty_share[[1]]) * 100
+          err_text <- sprintf("%+.1f%%pt", err)
+          err_class <- if (abs(err) <= 1) "err-good" else if (abs(err) <= 3) "err-mid" else "err-high"
+          tags$td(class = err_class, err_text)
+        }
+
         div(
           class = "dt-table-wrap has-scroll",
           tags$table(
             class = "dt-table data-wide",
             tags$thead(tags$tr(
               tags$th("#"),
-              tags$th("預測月份"),
+              tags$th("月份"),
               tags$th("港口"),
               tags$th("預測空櫃占比"),
+              if (has_validation) tags$th("實際占比") else NULL,
+              if (has_validation) tags$th("誤差") else NULL,
               tags$th("預測空櫃個數"),
               tags$th("預測總個數"),
-              tags$th("基準分數"),
-              tags$th("等級")
+              tags$th(if (has_validation) "實際等級" else "觀察等級")
             )),
             tags$tbody(
-              if (nrow(rows) == 0) {
-                tags$tr(tags$td(colspan = 8, class = "dt-empty", "尚未產生未來觀察清單"))
+              if (nrow(all_rows) == 0) {
+                tags$tr(tags$td(colspan = 9, class = "dt-empty", "此月份之後無可顯示資料"))
               } else {
-                tagList(lapply(seq_len(nrow(rows)), function(i) {
-                  row <- rows[i, ]
+                tagList(lapply(seq_len(nrow(all_rows)), function(i) {
+                  row <- all_rows[i, ]
+                  is_val <- isTRUE(row$is_validation[[1]])
+                  actual_td <- if (has_validation) {
+                    if (is_val && !is.na(row$actual_empty_share[[1]])) {
+                      tags$td(fmt_pct(row$actual_empty_share[[1]], 1))
+                    } else {
+                      tags$td(class = "dt-empty-cell", "—")
+                    }
+                  } else NULL
+                  level_val <- if (is_val && !is.na(row$actual_risk_level[[1]])) {
+                    row$actual_risk_level[[1]]
+                  } else {
+                    as.character(row$proxy_risk_level[[1]])
+                  }
                   tags$tr(
+                    class = if (is_val) "row-validation" else "",
                     tags$td(class = "dt-row-num", i),
                     tags$td(row$ym_label),
                     tags$td(display_port(row$port)),
                     tags$td(fmt_pct(row$pred_empty_share, 1)),
+                    actual_td,
+                    if (has_validation) error_cell(row) else NULL,
                     tags$td(fmt_num(row$empty_container_count, 0)),
                     tags$td(fmt_num(row$total_container_count, 0)),
-                    tags$td(class = "dt-mono", fmt_idx(row$proxy_risk_score, 3)),
-                    tags$td(risk_label[[as.character(row$proxy_risk_level)]] %||% as.character(row$proxy_risk_level))
+                    tags$td(risk_label[[level_val]] %||% level_val)
                   )
                 }))
               }
@@ -363,14 +394,17 @@ register_forecast_outputs <- function(server_env) {
       output$baseline_watchlist_legend <- renderUI({
         div(
           class = "mode-note subtle",
-          HTML(
-            paste0(
-              "<strong>等級定義：</strong>",
-              "正常 = 基準分數低於 0.95；",
-              "觀察 = 0.95 至 1.10，代表接近多年高位；",
-              "偏高 = 高於 1.10，代表預測空櫃結構與作業量相對多年基準偏高。"
-            )
-          )
+          HTML(paste0(
+            "<strong>淡藍色列（已知結果）：</strong>",
+            "Prophet 以 2024 年底前資料預測 2025 全年，實際值已知，可直接對照驗證。",
+            "「誤差」欄為實際值 − 預測值（百分點）：",
+            "<span style='color:#16a34a;font-weight:600;'>綠色</span> ±1%pt 以內，",
+            "<span style='color:#d97706;font-weight:600;'>橘色</span> ±1–3%pt，",
+            "<span style='color:#dc2626;font-weight:600;'>紅色</span> 超過 ±3%pt。",
+            "「實際等級」依當月實際值判定。",
+            "<br><strong>白色列（尚無實際值）：</strong>預測 2026 年，等級依預測值估算，供提前關注使用，更新 iMarine 明細後再行確認。",
+            "<br><strong>觀察等級：</strong>正常 = 低於往年高點；觀察 = 接近往年高點；偏高 = 明顯高於往年高點。"
+          ))
         )
       })
 

@@ -2,6 +2,7 @@ server <- function(input, output, session) {
   rv <- reactiveValues(
     main_nav = "overview",
     analysis_ports = c("高雄港"),
+    baseline_port = "高雄港",
     dt_page = 1L,
     dt_sort_col = NULL,
     dt_sort_dir = "asc",
@@ -546,5 +547,6 @@ server <- function(input, output, session) {
   register_overview_outputs(environment())
   register_analysis_outputs(environment())
   register_matching_outputs(environment())
+  register_forecast_outputs(environment())
   register_provenance_outputs(environment())
 }

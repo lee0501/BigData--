@@ -28,6 +28,7 @@ source_files <- c(
   "R/dashboard_utils.R",
   "R/dashboard_compute.R",
   "R/dashboard_data.R",
+  "R/dashboard_port_baseline.R",
   "R/dashboard_matching_compute.R",
   "R/dashboard_ui_helpers.R",
   "R/modules/mod_overview.R",
@@ -42,6 +43,7 @@ source_files <- c(
   "R/modules/mod_overview_server.R",
   "R/modules/mod_analysis_server.R",
   "R/modules/mod_matching_server.R",
+  "R/modules/mod_forecast_server.R",
   "R/modules/mod_provenance_server.R",
   "R/dashboard_ui.R",
   "R/dashboard_server.R"

@@ -52,7 +52,10 @@ port_baseline_watchlist <- read_optional_csv(port_baseline_files$watchlist) %>%
     ds = parse_month_date(ds),
     port = normalize_port(port),
     ym_label = fmt_ym(ym),
-    proxy_risk_level = factor(proxy_risk_level, levels = c("normal", "watch", "high"))
+    proxy_risk_level = factor(proxy_risk_level, levels = c("normal", "watch", "high")),
+    is_validation = if ("is_validation" %in% names(.)) as.logical(is_validation) else FALSE,
+    actual_empty_share = if ("actual_empty_share" %in% names(.)) as.numeric(actual_empty_share) else NA_real_,
+    actual_risk_level = if ("actual_risk_level" %in% names(.)) as.character(actual_risk_level) else NA_character_
   ) %>%
   arrange(ym, desc(proxy_risk_score))
 
@@ -113,9 +116,9 @@ build_port_baseline_bridge <- function(status_tbl, ym_value) {
       empty_share_vs_yhat = safe_divide(empty_share_count, yhat_empty_share_count),
       total_vs_yhat = safe_divide(total_container_count, yhat_total_container_count),
       baseline_signal = case_when(
-        empty_share_vs_yhat >= 1.10 | total_vs_yhat >= 1.10 ~ "超出季節性預期",
-        empty_share_vs_yhat >= 0.95 | total_vs_yhat >= 0.95 ~ "接近季節性上界",
-        TRUE ~ "符合季節性範圍"
+        empty_share_vs_yhat >= 1.10 | total_vs_yhat >= 1.10 ~ "高於往年同期",
+        empty_share_vs_yhat >= 0.95 | total_vs_yhat >= 0.95 ~ "略高於往年同期",
+        TRUE ~ "與往年同期相近"
       )
     )
 

@@ -4,6 +4,14 @@ window.switchPage = function(pageName) {
     }
 };
 
+window.switchInitialPageFromUrl = function() {
+    const params = new URLSearchParams(window.location.search);
+    const pageName = params.get('page');
+    if (pageName && window.Shiny) {
+        window.switchPage(pageName);
+    }
+};
+
 window.toggleAnalysisPort = function(port) {
     if (window.Shiny) {
         Shiny.setInputValue('toggle_analysis_port', port + '::' + Date.now(), {priority: 'event'});
@@ -256,4 +264,10 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.add('open');
         overlay.classList.remove('sidebar-visible');
     }
+});
+
+document.addEventListener('shiny:connected', function() {
+    window.switchInitialPageFromUrl();
+    setTimeout(window.switchInitialPageFromUrl, 500);
+    setTimeout(window.switchInitialPageFromUrl, 1500);
 });

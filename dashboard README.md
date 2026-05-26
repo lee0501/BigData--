@@ -10,6 +10,15 @@
 - `matching_final_2025.csv`
 - `simulation_recommendation_final_2025.csv`
 
+另新增 `官方基準` 頁面，讀取港務公司多年官方統計與 Prophet baseline 輸出：
+
+- `port_stat_prophet_base.csv`
+- `port_stat_prophet_forecast.csv`
+- `port_stat_prophet_backtest.csv`
+- `port_stat_prophet_latest_watchlist.csv`
+
+此頁用途是把 iMarine 的 2025 壓力結果放回多年官方統計背景中判讀，不取代正式 status / matching / simulation。
+
 因此，dashboard 的內容必須和 [app_formula_design.md](/Users/lee/Documents/BigData/context/app_formula_design.md) 保持一致，不能再回頭使用 prototype 中不符合正式資料定義的欄位或文案。
 
 ## 2. 技術選擇
@@ -59,6 +68,19 @@
 
 - 不在主要圖表與正式推薦中顯示上述三港
 - 可在頁面底部或說明區塊加一段方法說明，交代排除原因
+
+## 3.1 官方基準頁判讀規則
+
+`官方基準` 頁面使用兩層比較：
+
+- iMarine 狀態：同一月份四個正式港口之間的相對比較，使用月內 Q75 / Q50。
+- Bridge 對照：iMarine 高壓港的當月壓力，對照 Prophet 同月預期值（yhat），回答「是否高於往年同期」。
+
+兩個口徑不同，必須分開說明：
+
+1. **Bridge**：使用 Prophet `yhat`（同月份多年季節性預期）。若實際 > yhat，代表今年此月超出往年同期，屬結構性訊號。
+2. **優先檢查清單**：使用同港多年歷史 Q75 當分級門檻，提供未來月份是否值得優先關注 iMarine 明細的參考依據。非正式高壓預測。
+3. **驗證段（2025 全年）**：Prophet 以 2024 年底前資料預測 2025 全年，實際值已知，可直接對比驗證模型準確度。
 
 ## 4. 原型頁面改版原則
 
