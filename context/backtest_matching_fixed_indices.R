@@ -4,7 +4,7 @@ library(tidyr)
 
 pair_input_path <- "/Users/lee/Documents/BigData/context/buffer_backtest_port_month.csv"
 weight_input_path <- "/Users/lee/Documents/BigData/context/matching_weight_scenarios.csv"
-distance_input_path <- "/Users/lee/Downloads/Distance_Matrix - 距離.csv"
+distance_input_path <- "/Users/lee/Documents/BigData/context/input/Distance_Matrix - distence.csv"
 
 candidate_output_path <- "/Users/lee/Documents/BigData/context/matching_candidate_pairs_fixed_2025.csv"
 parent_summary_output_path <- "/Users/lee/Documents/BigData/context/matching_parent_backtest_summary.csv"

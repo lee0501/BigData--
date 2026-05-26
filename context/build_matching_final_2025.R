@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 
 status_input_path <- "/Users/lee/Documents/BigData/context/status_final_2025.csv"
-distance_input_path <- "/Users/lee/Downloads/Distance_Matrix - 距離.csv"
+distance_input_path <- "/Users/lee/Documents/BigData/context/input/Distance_Matrix - distence.csv"
 distance_lookup_output_path <- "/Users/lee/Documents/BigData/context/port_pair_distance_lookup.csv"
 output_path <- "/Users/lee/Documents/BigData/context/matching_final_2025.csv"
 
@@ -118,4 +118,3 @@ write_csv(matching_table, output_path)
 
 message("Distance lookup written to: ", distance_lookup_output_path)
 message("Matching final table written to: ", output_path)
-

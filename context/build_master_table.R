@@ -5,15 +5,33 @@ library(tidyr)
 library(slider)
 library(tibble)
 
+script_arg <- grep("^--file=", commandArgs(FALSE), value = TRUE)
+script_path <- if (length(script_arg)) {
+  normalizePath(sub("^--file=", "", script_arg[[1]]), winslash = "/", mustWork = TRUE)
+} else {
+  tryCatch(
+    normalizePath(sys.frame(1)$ofile, winslash = "/", mustWork = TRUE),
+    error = function(e) NA_character_
+  )
+}
+
+context_dir <- if (!is.na(script_path)) {
+  dirname(script_path)
+} else {
+  file.path(getwd(), "context")
+}
+
+input_dir <- file.path(context_dir, "input")
+
 # Input files
-enter_empty_path <- "/Users/lee/Downloads/enter-empty.csv"
-enter_full_path <- "/Users/lee/Downloads/enter-full.csv"
-exit_empty_path <- "/Users/lee/Downloads/exit-empty.csv"
-exit_full_path <- "/Users/lee/Downloads/exit-full.csv"
-throughput_path <- "/Users/lee/Downloads/throughput.csv"
+enter_empty_path <- file.path(input_dir, "enter-empty.csv")
+enter_full_path <- file.path(input_dir, "enter-full.csv")
+exit_empty_path <- file.path(input_dir, "exit-empty.csv")
+exit_full_path <- file.path(input_dir, "exit-full.csv")
+throughput_path <- file.path(input_dir, "throughput.csv")
 
 # Output file
-output_path <- "/Users/lee/Documents/BigData/context/master_table_2025.csv"
+output_path <- file.path(context_dir, "master_table_2025.csv")
 
 # Initial port mapping based on currently confirmed major ports.
 port_map <- tribble(
